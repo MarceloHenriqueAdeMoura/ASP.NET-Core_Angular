@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectAngular.Data;
 
 namespace ProjectAngular
 {
@@ -21,6 +23,8 @@ namespace ProjectAngular
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<DataContext>(options => 
+                    options.UseSqlServer(Configuration.GetConnectionString("ProjectAngularContext")));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
