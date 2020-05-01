@@ -10,7 +10,7 @@ import { error } from 'protractor';
 /** eventos component*/
 export class EventosComponent implements OnInit {
 
-  eventos: any;
+  eventos: any = [];
 
   /** eventos ctor */
   constructor(private http: HttpClient) {
