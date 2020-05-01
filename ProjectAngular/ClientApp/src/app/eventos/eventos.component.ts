@@ -10,7 +10,22 @@ import { error } from 'protractor';
 /** eventos component*/
 export class EventosComponent implements OnInit {
 
+  _filtroLista: string;
+  get filtroLista(): string {
+    return this._filtroLista;
+  }
+
+  set filtroLista(value: string) {
+    this._filtroLista = value;
+    this.eventosFiltrados = this.filtroLista ? this.filtrarEvento(this.filtroLista) : this.eventos;
+  }
+
+  eventosFiltrados: any = [];
   eventos: any = [];
+  mostrarImagem = false;
+
+  larguraImg = 50;
+  margemImg = 2;
 
   /** eventos ctor */
   constructor(private http: HttpClient) {
@@ -19,6 +34,16 @@ export class EventosComponent implements OnInit {
 
   ngOnInit() {
     this.getEventos();
+  }
+
+  filtrarEvento(filtrarPor: string): any {
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.eventos.filter(evento =>
+      evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1);
+  }
+
+  alternarImagem() {
+    this.mostrarImagem = !this.mostrarImagem;
   }
 
   getEventos() {

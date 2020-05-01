@@ -13,11 +13,12 @@ namespace ProjectAngular.Models
         public DateTime DataEvento { get; set; }
         public int QtdPessoas { get; set; }
         public string Lote { get; set; }
+        public string ImagemUrl { get; set; }
 
         public Evento()
         {
         }
-        public Evento(int id, string tema, string local, DateTime dataEvento, int qtdPessoas, string lote)
+        public Evento(int id, string tema, string local, DateTime dataEvento, int qtdPessoas, string lote, string imagemUrl)
         {
             Id = id;
             Tema = tema;
@@ -25,6 +26,7 @@ namespace ProjectAngular.Models
             DataEvento = dataEvento;
             QtdPessoas = qtdPessoas;
             Lote = lote;
+            ImagemUrl = imagemUrl;
         }
     }
 }
