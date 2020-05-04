@@ -31,7 +31,7 @@
       <td>{{evento.id}}</td> <!-- Interpolation -->
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.dataEvento | date: 'dd/MM/yyyy'}}</td>
       <td>{{evento.qtdPessoas}}</td>
       <td>{{evento.lote | uppercase}}</td>
       <td>
