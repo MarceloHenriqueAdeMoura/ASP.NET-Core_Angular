@@ -41,9 +41,11 @@ namespace ProjectAngular.Repository
         //EVENTOS
         public async Task<Evento[]> GetAllEventosAsync(bool includePalestrantes = false)
         {
+            //Pesquisa os Eventos incluindo os Lotes e Redes Sociais
             IQueryable<Evento> query = _context.Eventos.Include(x => x.Lotes)
                                                        .Include(x => x.RedeSociais);
 
+            //Caso passe o Palestrante, será incluído na pesquisa
             if (includePalestrantes)
             {
                 query = query.Include(pe => pe.PalestranteEventos)
@@ -93,8 +95,25 @@ namespace ProjectAngular.Repository
         }
 
         //PALESTRANTES
-        public async Task<Palestrante> GetPalestranteByIdAsync(int PalestranteId, bool includeEventos = false)
+        public async Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos = false)
         {
+            //Pesquisa os Palestrantes incluindo as Redes Sociais
+            IQueryable<Palestrante> query = _context.Palestrantes.Include(x => x.RedeSociais);
+
+            //Caso passe o Evento, será incluído na pesquisa
+            if (includeEventos)
+            {
+                query = query.Include(pe => pe.PalestranteEventos)
+                             .ThenInclude(e => e.Evento);
+            }
+
+            query = query.AsNoTracking()
+                         .OrderByDescending(p => p.Id);
+
+            return await query.ToArrayAsync();
+        }
+        public async Task<Palestrante> GetPalestranteByIdAsync(int PalestranteId, bool includeEventos = false)
+        {            
             IQueryable<Palestrante> query = _context.Palestrantes.Include(x => x.RedeSociais);
 
             if (includeEventos)

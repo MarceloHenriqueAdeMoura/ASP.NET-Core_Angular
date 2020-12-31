@@ -82,6 +82,7 @@ namespace ProjectAngular.API.Controllers
             {
                 return RedirectToAction(nameof(ErrorModel), new { message = e.Message });
             }
+            
             return BadRequest();
         }
 
@@ -91,6 +92,7 @@ namespace ProjectAngular.API.Controllers
             try
             {
                 var eventoId = await _repository.GetEventoByIdAsync(id, false);
+
                 if (eventoId == null) return NotFound();
 
                 _repository.Update(evento);
@@ -104,6 +106,7 @@ namespace ProjectAngular.API.Controllers
             {
                 return RedirectToAction(nameof(ErrorModel), new { message = e.Message });
             }
+            
             return BadRequest();
         }
 
@@ -113,6 +116,7 @@ namespace ProjectAngular.API.Controllers
             try
             {
                 var eventoId = await _repository.GetEventoByIdAsync(id, false);
+
                 if (eventoId == null) return NotFound();
 
                 _repository.Delete(eventoId);
@@ -126,6 +130,7 @@ namespace ProjectAngular.API.Controllers
             {
                 return RedirectToAction(nameof(ErrorModel), new { message = e.Message });
             }
+
             return BadRequest();
         }
     }

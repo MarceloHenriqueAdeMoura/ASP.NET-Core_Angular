@@ -20,6 +20,7 @@ namespace ProjectAngular.Repository.Interfaces
         Task<Evento> GetEventoByIdAsync(int EventoId, bool includePalestrantes);
 
         //PALESTRANTES
+        Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos);        
         Task<Palestrante[]> GetAllPalestrantesByNameAsync(string name, bool includeEventos);
         Task<Palestrante> GetPalestranteByIdAsync(int PalestranteId, bool includeEventos);
     }

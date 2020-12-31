@@ -24,6 +24,20 @@ namespace ProjectAngular.API.Controllers
             _repository = repository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var result = await _repository.GetAllPalestrantesAsync(true);
+                return Ok(result);
+            }
+            catch (ApplicationException e)
+            {                
+                return RedirectToAction(nameof(ErrorModel), new {messge = e.Message});
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
