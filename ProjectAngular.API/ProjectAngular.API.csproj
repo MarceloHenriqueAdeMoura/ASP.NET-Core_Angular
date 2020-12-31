@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-    <IsPackable>false</IsPackable>
-    <SpaRoot>ClientApp\</SpaRoot>
+    <IsPackable>false</IsPackable>    
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 
     <!-- Set this to true if you enable server-side prerendering -->
@@ -28,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectAngular.Domain\ProjectAngular.Domain.csproj" />
-	<ProjectReference Include="..\ProjectAngular.Repository\ProjectAngular.Repository.csproj" />
+	<ProjectReference Include="..\ProjectAngular.Repository\ProjectAngular.Repository.csproj" />	
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

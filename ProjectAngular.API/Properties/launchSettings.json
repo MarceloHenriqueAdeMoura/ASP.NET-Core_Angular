@@ -17,7 +17,7 @@
     },
     "ProjectAngular.API": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/eventos",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
