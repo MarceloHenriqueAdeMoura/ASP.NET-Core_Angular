@@ -10,6 +10,8 @@ using ProjectAngular.Domain.Models;
 using ProjectAngular.Repository.Interfaces;
 using ProjectAngular.Repository;
 using ProjectAngular.API.Pages;
+using AutoMapper;
+using ProjectAngular.API.Dtos;
 
 namespace ProjectAngular.API.Controllers
 {
@@ -18,9 +20,11 @@ namespace ProjectAngular.API.Controllers
     public class EventosController : ControllerBase
     {
         private readonly IProjectAngularRepository _repository;
+        private readonly IMapper _mapper;
 
-        public EventosController(IProjectAngularRepository repository)
+        public EventosController(IProjectAngularRepository repository, IMapper mapper)
         {
+            _mapper = mapper;
             _repository = repository;
         }
 
@@ -29,7 +33,10 @@ namespace ProjectAngular.API.Controllers
         {
             try
             {
-                var result = await _repository.GetAllEventosAsync(true);
+                var eventos = await _repository.GetAllEventosAsync(true);
+
+                var result = _mapper.Map<EventoDto[]>(eventos);
+
                 return Ok(result);
             }
             catch (ApplicationException e)
@@ -43,7 +50,10 @@ namespace ProjectAngular.API.Controllers
         {
             try
             {
-                var result = await _repository.GetEventoByIdAsync(id, true);
+                var evento = await _repository.GetEventoByIdAsync(id, true);
+
+                var result = _mapper.Map<EventoDto>(evento);
+
                 return Ok(result);
             }
             catch (ApplicationException e)
@@ -57,7 +67,10 @@ namespace ProjectAngular.API.Controllers
         {
             try
             {
-                var result = await _repository.GetAllEventosByTemaAsync(tema, true);
+                var evento = await _repository.GetAllEventosByTemaAsync(tema, true);
+
+                var result = _mapper.Map<EventoDto>(evento);
+
                 return Ok(result);
             }
             catch (ApplicationException e)
@@ -67,46 +80,50 @@ namespace ProjectAngular.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Evento evento)
+        public async Task<IActionResult> Create(EventoDto eventoDto)
         {
             try
             {
+                var evento = _mapper.Map<Evento>(eventoDto);
+
                 _repository.Add(evento);
 
                 if (await _repository.SaveChangesAsync())
                 {
-                    return Created($"/api/eventos/{evento.Id}", evento);
+                    return Created($"/api/eventos/{eventoDto.Id}", _mapper.Map<EventoDto>(evento));
                 }
             }
             catch (ApplicationException e)
             {
                 return RedirectToAction(nameof(ErrorModel), new { message = e.Message });
             }
-            
+
             return BadRequest();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(int id, Evento evento)
+        public async Task<IActionResult> Edit(int id, EventoDto eventoDto)
         {
             try
             {
-                var eventoId = await _repository.GetEventoByIdAsync(id, false);
+                var evento = await _repository.GetEventoByIdAsync(id, false);
 
-                if (eventoId == null) return NotFound();
+                if (evento == null) return NotFound();
+
+                _mapper.Map(eventoDto, evento);
 
                 _repository.Update(evento);
 
                 if (await _repository.SaveChangesAsync())
                 {
-                    return Created($"/api/eventos/{evento.Id}", evento);
+                    return Created($"/api/eventos/{eventoDto.Id}", _mapper.Map<EventoDto>(evento));
                 }
             }
             catch (ApplicationException e)
             {
                 return RedirectToAction(nameof(ErrorModel), new { message = e.Message });
             }
-            
+
             return BadRequest();
         }
 

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using ProjectAngular.API.Pages;
 using ProjectAngular.Domain.Models;
 using ProjectAngular.Repository.Interfaces;
