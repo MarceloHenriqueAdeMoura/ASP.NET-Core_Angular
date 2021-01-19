@@ -8,6 +8,7 @@ import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule} from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 import { defineLocale } from "ngx-bootstrap/chronos";
 import { ptBrLocale } from "ngx-bootstrap/locale";
@@ -16,21 +17,27 @@ import { EventoService } from './_services/evento.service';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { EventosComponent } from './eventos/eventos.component';
+import { PalestrantesComponent } from './palestrantes/palestrantes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContatosComponent } from './contatos/contatos.component';
+import { TituloComponent } from "./_shared/titulo/titulo.component";
 
 import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
 
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
-  declarations: [
+  declarations: [			
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     EventosComponent,
+    PalestrantesComponent,
+    DashboardComponent,
+    ContatosComponent,
+    TituloComponent,
     DateTimeFormatPipePipe
-  ],
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -41,7 +48,8 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [
     EventoService
