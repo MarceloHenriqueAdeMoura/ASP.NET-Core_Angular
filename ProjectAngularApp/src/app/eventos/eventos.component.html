@@ -39,7 +39,7 @@
   <tbody *ngIf="eventos && eventos.length"> <!-- Structural Directive-->
     <tr *ngFor="let evento of eventosFiltrados">
       <td>
-        <img *ngIf="mostrarImagem" src="http://localhost:5000/img/{{evento.imagemUrl}}"
+        <img *ngIf="mostrarImagem" src="http://localhost:5000/resources/imagens/{{evento.imagemUrl}}?_ts={{dataAtual}}"
         [style.width.px]="larguraImg"
         [style.margin.px]="margemImg" /> <!-- Property Binding -->
       </td>
@@ -115,7 +115,7 @@ role="dialog" aria-labelledby="dialog-sizes-name1">
             bsDatepicker
             value="{{dataEvento | DateTimeFormatPipe}}"
             [(ngModel)]="dataEvento"
-            [bsConfig]="{dateInputFormat: 'DD/MM/YYYY hh:mm a' }"
+            [bsConfig]="{dateInputFormat: 'DD/MM/YYYY hh:mm' }"
             [ngClass]="{'is-invalid': registerForm.get('dataEvento').errors && registerForm.get('dataEvento').touched}"
             formControlName="dataEvento" placeholder=""/>
             <div class="invalid-feedback">Data e Hora é obrigatório</div>
@@ -132,9 +132,17 @@ role="dialog" aria-labelledby="dialog-sizes-name1">
           </div>
           <div class="form-group col-md-9">
             <label>Imagem</label>
-            <input type="text" class="form-control"
-            [ngClass]="{'is-invalid': registerForm.get('imagemUrl').errors && registerForm.get('imagemUrl').touched}"
-            formControlName="imagemUrl" placeholder="">
+            <table>
+              <tr>
+                <td>
+                  <button class="btn btn-success" (click)="file.click()">Enviar Imagem</button>
+                  <input type="file" #file class="form-control" (change)="onFileChange($event)"
+                  [ngClass]="{'is-invalid': registerForm.get('imagemUrl').errors && registerForm.get('imagemUrl').touched}"
+                  formControlName="imagemUrl" placeholder=""
+                  style="display: none;">
+                </td>
+              </tr>
+            </table>            
             <div *ngIf="registerForm.get('imagemUrl').hasError('required') && registerForm.get('imagemUrl').touched" class="invalid-feedback">Imagem é obrigatório</div>
           </div>
         </div>  

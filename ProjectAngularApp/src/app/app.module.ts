@@ -10,9 +10,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 
-import { defineLocale } from "ngx-bootstrap/chronos";
-import { ptBrLocale } from "ngx-bootstrap/locale";
-
 import { EventoService } from './_services/evento.service';
 
 import { AppComponent } from './app.component';
@@ -24,8 +21,6 @@ import { ContatosComponent } from './contatos/contatos.component';
 import { TituloComponent } from "./_shared/titulo/titulo.component";
 
 import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
-
-defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
   declarations: [			

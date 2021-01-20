@@ -12,6 +12,8 @@ using ProjectAngular.Repository;
 using ProjectAngular.API.Pages;
 using AutoMapper;
 using ProjectAngular.API.Dtos;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace ProjectAngular.API.Controllers
 {
@@ -149,6 +151,36 @@ namespace ProjectAngular.API.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "imagens");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if(file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
+                    var fullPath = Path.Combine(pathToSave, fileName.Replace("\"", " ").Trim());
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+
+                return Ok();
+            }
+            catch (ApplicationException e)
+            {
+                return RedirectToAction(nameof(ErrorModel), new { message = e.Message });
+            }
+
+            return BadRequest("Erro ao tentar realizar upload de arquivo!");
         }
     }
 }
