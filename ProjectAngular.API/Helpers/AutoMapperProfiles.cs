@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using ProjectAngular.API.Dtos;
+using ProjectAngular.Domain.Identity;
 using ProjectAngular.Domain.Models;
 
 namespace ProjectAngular.API.Helpers
@@ -10,7 +11,7 @@ namespace ProjectAngular.API.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Evento, EventoDto>().ForMember(destinationMember: dest => dest.Palestrantes, memberOptions: opt =>{
+            CreateMap<Evento, EventoDto>().ForMember(destinationMember: dest => dest.Palestrantes, memberOptions: opt => {
                 opt.MapFrom(sourceMember: src => src.PalestranteEventos.Select(x => x.Palestrante).ToList());
             }).ReverseMap();
 
@@ -18,8 +19,10 @@ namespace ProjectAngular.API.Helpers
                 opt.MapFrom(sourceMember: src => src.PalestranteEventos.Select(x => x.Evento).ToList());
             }).ReverseMap();
 
-            CreateMap<Lote, LoteDto>();
-            CreateMap<RedeSocial, RedeSocialDto>();
+            CreateMap<Lote, LoteDto>().ReverseMap();
+            CreateMap<RedeSocial, RedeSocialDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserLoginDto>().ReverseMap();
         }
     }
 }
