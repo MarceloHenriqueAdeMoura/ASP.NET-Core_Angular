@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule  } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -21,9 +21,13 @@ import { ContatosComponent } from './contatos/contatos.component';
 import { TituloComponent } from "./_shared/titulo/titulo.component";
 
 import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
-  declarations: [			
+  declarations: [				
     AppComponent,
     NavMenuComponent,
     EventosComponent,
@@ -31,8 +35,11 @@ import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
     DashboardComponent,
     ContatosComponent,
     TituloComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent,
     DateTimeFormatPipePipe
-   ],
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -47,7 +54,12 @@ import { DateTimeFormatPipePipe } from './_helps/DateTimeFormatPipe.pipe';
     ToastrModule.forRoot()
   ],
   providers: [
-    EventoService
+    EventoService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [
     AppComponent
