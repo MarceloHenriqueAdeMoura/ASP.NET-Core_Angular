@@ -6,8 +6,7 @@ namespace ProjectAngular.API.Dtos
     {        
         public int Id { get; set; }
 
-        [Required(ErrorMessage="{0} required")]
-        [StringLength(100, MinimumLength=5, ErrorMessage="Campo deve ter entre 5 e 100 caracteres!")]
+        [Required(ErrorMessage="{0} required")]    
         public string Nome { get; set; }
 
         [Required(ErrorMessage="{0} required")]

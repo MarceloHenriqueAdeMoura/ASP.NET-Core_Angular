@@ -112,6 +112,18 @@ namespace ProjectAngular.API.Controllers
 
                 if (evento == null) return NotFound();
 
+                var idLotes = new List<int>();
+                var idRedeSociais = new List<int>();
+
+                eventoDto.Lotes.ForEach(item => idLotes.Add(item.Id));
+                eventoDto.RedeSociais.ForEach(item => idRedeSociais.Add(item.Id));
+
+                var lotes = evento.Lotes.Where(lote => !idLotes.Contains(lote.Id)).ToArray();
+                var redesSociais = evento.RedeSociais.Where(rede => !idRedeSociais.Contains(rede.Id)).ToArray();
+
+                if (lotes.Length > 0) _repository.DeleteRange(lotes);
+                if (redesSociais.Length > 0) _repository.DeleteRange(redesSociais);
+
                 _mapper.Map(eventoDto, evento);
 
                 _repository.Update(evento);
@@ -134,11 +146,11 @@ namespace ProjectAngular.API.Controllers
         {
             try
             {
-                var eventoId = await _repository.GetEventoByIdAsync(id, false);
+                var evento = await _repository.GetEventoByIdAsync(id, false);
 
-                if (eventoId == null) return NotFound();
+                if (evento == null) return NotFound();
 
-                _repository.Delete(eventoId);
+                _repository.Delete(evento);
 
                 if (await _repository.SaveChangesAsync())
                 {

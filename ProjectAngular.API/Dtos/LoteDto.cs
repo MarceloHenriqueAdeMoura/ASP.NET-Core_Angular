@@ -11,12 +11,10 @@ namespace ProjectAngular.API.Dtos
 
         [Required(ErrorMessage="{0} required!")]
         public decimal Preco { get; set; }
-
-        [Required(ErrorMessage="{0} required!")]
+        
         [DataType(DataType.Date)]
         public string DataInicio { get; set; }
-
-        [Required(ErrorMessage="{0} required!")]
+        
         [DataType(DataType.Date)]
         public string DataFim { get; set; }
 
